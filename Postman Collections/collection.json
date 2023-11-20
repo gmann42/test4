@@ -1,0 +1,1190 @@
+{
+	"info": {
+		"_postman_id": "ed30e710-6ca8-4078-a1b5-3f4fd6d3cbfc",
+		"name": "test-4-User management API",
+		"description": "# 👤 Get started here\n\nThis template demonstrates how to structure endpoints for a user management REST API that contains endpoints for user registration, login, profile management, and more.\n\nUsers created using this API can perform tasks like registering, logging in, and updating their profiles. Users who are assigned an 'admin' role can perform all tasks, including getting a list of all users and deleting user profiles.\n\n### 🔐 Authentication and authorization\n\nYou must have a valid bearer token to use the API added in this template. When you send the `Register` request, you will receive a token in the response. The `Register` request also contains a test script that sets the token in the `accessToken` collection variable so you can reuse it in other requests easily.\n\nTo send the requests in the `Admin` folder, you need to have admin permissions. You can grant yourself admin permissions using the `Register` request by adding a key named \"role\" with \"admin\" as the value in the request body.\n\n## 🔖 How to use this template?\n\n#### **Step 1: Send the requests**\n\nCheck out the different parts of the requests, including the request body, documentation, headers, tests, and path parameters. Send the requests to view the response returned by the API.\n\nYou can explore the API in the order given below to understand the workflow without running into any hiccups:\n\n`Register → Log in → Get profile → Update profile → Change user role → Get all users → Delete user`\n\n#### **Step 2: Customize the requests**\n\nAdd your API’s base URL in the `url` collection variable. Update the request body wherever needed and send the requests to test your API.\n\n#### **Step 3: Continue building the collection**\n\nCreate requests in this collection to test the new API endpoints you develop.\n\n## 💡Related templates\n\n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=18238f01-dfc7-4a9a-9330-1f8e7c928daf)  \n[Payment gateway and processing API](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=2ef318a1-e16c-4761-b8dc-1ccb1167ee8d&sourceTemplateId=18238f01-dfc7-4a9a-9330-1f8e7c928daf)  \n[File storage API](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=45d1f394-35cd-44fa-aecc-fa329a7752a3&sourceTemplateId=18238f01-dfc7-4a9a-9330-1f8e7c928daf)  \n[Push notification API](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=de8244f9-136a-4a6a-a695-d4516fd20308&sourceTemplateId=18238f01-dfc7-4a9a-9330-1f8e7c928daf)  \n[Search API](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=da8172d0-679b-4173-9104-0ecef2c32cd3&sourceTemplateId=18238f01-dfc7-4a9a-9330-1f8e7c928daf)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}",
+									"",
+									"const response = pm.response.json(),",
+									"    accessToken = response.data.token;",
+									"",
+									"// Storing the access token in the environment to be used in other endpoints",
+									"pm.collectionVariables.set('accessToken', accessToken);"
+								]
+							}
+						}
+					],
+					"id": "776b9ae5-402d-4c91-9e61-57ed16e2b42c",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"sandrawill\",\n    \"email\": \"sandrawilliam1996@example.com\",\n    \"age\": 20,\n    \"firstName\": \"Sandra\",\n    \"lastName\": \"William\",\n    \"password\": \"sandrawill\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/signup",
+						"description": "This request creates a new user.\n\n**Note:** If you want to add yourself as an admin, you can add a key named \"role\" and set the value \"admin\" as a part of the request body.\n\nThis request also has a test script that sets the authorization token received in the response in the `accessToken` collection variable. This helps you reuse the token in other requests easily."
+					},
+					"response": [
+						{
+							"id": "9eda31e4-eefe-4d45-aa86-42adbeb6e8bb",
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Arvind\",\n    \"lastName\": \"Admin\",\n    \"email\": \"arvind-admin@gmail.com\",\n    \"username\": \"arvindkalra-admin\",\n    \"password\": \"arvindkalra-admin\",\n    \"role\": \"admin\",\n    \"age\": 18\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/signup"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 09:17:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "387"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"183-RVxQlq25E3PoKFU4OcTJY3duAfQ\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"user\": {\n            \"id\": 4,\n            \"username\": \"sandrawill\",\n            \"email\": \"sandrawilliam1996@example.com\",\n            \"age\": 20,\n            \"firstName\": \"Sandra\",\n            \"lastName\": \"William\",\n            \"password\": \"f4967bd8be423c9a60507c579ad58b051ac0fdca9e9d0cbcc6887bbbb24e05f5\",\n            \"role\": \"user\",\n            \"updatedAt\": \"2023-05-12T10:36:32.417Z\",\n            \"createdAt\": \"2023-05-12T10:36:32.417Z\"\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInVzZXJuYW1lIjoic2FuZHJhd2lsbCIsImlhdCI6MTY4Mzg4Nzc5MiwiZXhwIjoxNjgzODkxMzkyfQ.1oWobYNftxayDssyHaP3E1wmRXLuGfRRXpuV6Oux-iU\"\n    }\n}"
+						},
+						{
+							"id": "4ac5211e-99f2-48e2-aa99-b3a09fc9f45f",
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"sandrawill\",\n    \"email\": \"sandrawilliam1996@example.com\",\n    \"age\": 20,\n    \"firstName\": \"Sandra\",\n    \"lastName\": \"William\",\n    \"password\": \"sandrawill\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/signup"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 17 May 2023 12:38:14 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "382"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"17e-vukrnygjchzdmmVyeM/fMaGFB7s\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"user\": {\n            \"username\": \"sandrawill\",\n            \"email\": \"sandrawilliam1996@example.com\",\n            \"age\": 20,\n            \"firstName\": \"Sandra\",\n            \"lastName\": \"William\",\n            \"password\": \"sandrawill\",\n            \"role\": \"admin\"\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYXJ2aW5ka2FscmEtYWRtaW4iLCJpYXQiOjE2ODM3MTYyMzMsImV4cCI6MTY4MzcxOTgzM30.gbM_hx20Fz_xjSQFNAfluVJA5G_LDPYbTzl6e838V9M\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Log in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}",
+									"",
+									"const response = pm.response.json(),",
+									"    accessToken = response.data.token;",
+									"",
+									"// Storing the access token in the environment to be used in other endpoints",
+									"pm.collectionVariables.set('accessToken', accessToken);"
+								]
+							}
+						}
+					],
+					"id": "2f347f13-a7cb-4bfa-bafb-2a75f64d75be",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"harry123\",\n    \"password\": \"harry123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/login",
+						"description": "This request lets users log in.\n\nIt has a test script that sets the authorization token received in the response in the `accessToken` collection variable. This helps you reuse the token in other requests easily."
+					},
+					"response": [
+						{
+							"id": "5a1fe23e-d7aa-48d8-b6df-dd469fc74442",
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"arvindkalra-admin\",\n    \"password\": \"arvindkalra-admin\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/login"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 09:17:43 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "290"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"122-Lcpx5oiV5u5XLWGHO3uMpf38Zig\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"username\": \"harry123\",\n            \"email\": \"harry.smith@example.com\",\n            \"password\": \"d4cfaf03600bf1a55ba4372ceb17ff9234576eb062c1f8b78bd3c53c703f194c\",\n            \"age\": 33,\n            \"role\": \"admin\",\n            \"firstName\": \"Harry\",\n            \"lastName\": \"Smith\",\n            \"createdAt\": \"2023-05-12T10:34:32.864Z\",\n            \"updatedAt\": \"2023-05-12T10:34:32.864Z\"\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiaGFycnkxMjMiLCJpYXQiOjE2ODM4ODc4MjcsImV4cCI6MTY4Mzg5MTQyN30.hLf55ZfzHcr4mwi8l7dpzJWuHYOZCdfZMDav9X_rfZE\"\n    }\n}"
+						},
+						{
+							"id": "43edd1df-1cd8-4fa7-bc8a-937ab65ddf05",
+							"name": "400 (Invalid Username)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"tommillera\",\n    \"password\": \"tommillera\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/login"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "91"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5b-OTdgSjzKonfqmY8iEqC0UNIzZ+w\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 10:39:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": false,\n    \"error\": {\n        \"message\": \"Could not find any user with username: `tommillera`.\"\n    }\n}"
+						},
+						{
+							"id": "6294af6e-ddd0-475b-965a-f3fadc240edd",
+							"name": "400 (Password Mismatch)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"tommiller\",\n    \"password\": \"tommillera\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/login"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"54-3kqI2Q6y1TsGMiUbKk3joz9GLYA\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 10:40:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": false,\n    \"error\": {\n        \"message\": \"Provided username and password did not match.\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "6c97c9ed-636c-40e6-8135-8e0b2a4f3495",
+			"description": "This folder contains requests related to creating a user profile and logging in.",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"should have status code as 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}",
+									"",
+									"const response = pm.response.json(),",
+									"    result = response.data;",
+									"",
+									"const responseSchema = {",
+									"    type: 'object',",
+									"    properties: {",
+									"        id: {",
+									"            type: \"number\"",
+									"        },",
+									"        username: {",
+									"            type: \"string\"",
+									"        },",
+									"        email: {",
+									"            type: \"string\"",
+									"        },",
+									"        age: {",
+									"            type: \"number\"",
+									"        },",
+									"        role: {",
+									"            type: \"string\"",
+									"        }",
+									"    },",
+									"    required: ['id', 'username', 'email', 'age', 'role']",
+									"};",
+									"",
+									"pm.test('should have all the required keys in the response', function () {",
+									"    pm.expect(tv4.validate(result, responseSchema)).to.be.true;",
+									"});"
+								]
+							}
+						}
+					],
+					"id": "1cfbf6ca-247f-4af7-8751-4f85558e2296",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/user",
+						"description": "This request lets users view their profiles."
+					},
+					"response": [
+						{
+							"id": "31ce2a0b-7299-4c42-9c98-ba8f08a24216",
+							"name": "401",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{url}}/user"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 09:18:07 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "80"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"50-pF7L2BUdQsooflNE6rUz8FD5wA8\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": false,\n    \"error\": {\n        \"message\": \"Auth headers not provided in the request.\"\n    }\n}"
+						},
+						{
+							"id": "6513bb50-f9e6-4b67-a045-5d1ace9b542f",
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{url}}/user"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 09:18:33 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "150"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"96-VPiQpM3iFgWueczgIStnyQNg+sM\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"id\": 1,\n        \"username\": \"harry123\",\n        \"email\": \"harry.smith@example.com\",\n        \"password\": \"d4cfaf03600bf1a55ba4372ceb17ff9234576eb062c1f8b78bd3c53c703f194c\",\n        \"age\": 33,\n        \"role\": \"admin\",\n        \"firstName\": \"Harry\",\n        \"lastName\": \"Smith\",\n        \"createdAt\": \"2023-05-12T10:34:32.864Z\",\n        \"updatedAt\": \"2023-05-12T10:34:32.864Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"should have status code as 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}",
+									"",
+									"const response = pm.response.json(),",
+									"    result = response.data;",
+									"",
+									"const responseSchema = {",
+									"    type: 'object',",
+									"    properties: {",
+									"        id: {",
+									"            type: \"number\"",
+									"        },",
+									"        username: {",
+									"            type: \"string\"",
+									"        },",
+									"        email: {",
+									"            type: \"string\"",
+									"        },",
+									"        age: {",
+									"            type: \"number\"",
+									"        },",
+									"        role: {",
+									"            type: \"string\"",
+									"        }",
+									"    },",
+									"    required: ['id', 'username', 'email', 'age', 'role']",
+									"};",
+									"",
+									"pm.test('should have all the required keys in the response', function () {",
+									"    pm.expect(tv4.validate(result, responseSchema)).to.be.true;",
+									"});",
+									"",
+									"const requestPayload = JSON.parse(pm.request.body);",
+									"",
+									"pm.test('should update the required properties', function () {",
+									"    const keysToBeModified = Object.keys(requestPayload);",
+									"",
+									"    keysToBeModified.map((key) => {",
+									"        pm.expect(result[key]).to.eql(requestPayload[key]);",
+									"    })",
+									"});"
+								]
+							}
+						}
+					],
+					"id": "09b7deb5-b8dd-42bd-ae6c-603c2c73f030",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"age\": 33,\n    \"firstName\": \"Harry\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/user",
+						"description": "This request lets users update details on their profiles."
+					},
+					"response": [
+						{
+							"id": "003a06fd-1358-4796-af19-0f7d23ec7ee2",
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"age\": 21,\n    \"firstName\": \"Hello\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/user"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 09:18:43 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "150"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"96-VPiQpM3iFgWueczgIStnyQNg+sM\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"id\": 1,\n        \"username\": \"harry123\",\n        \"email\": \"harry.smith@example.com\",\n        \"password\": \"d4cfaf03600bf1a55ba4372ceb17ff9234576eb062c1f8b78bd3c53c703f194c\",\n        \"age\": 30,\n        \"role\": \"admin\",\n        \"firstName\": \"Hello\",\n        \"lastName\": \"Smith\",\n        \"createdAt\": \"2023-05-12T10:34:32.864Z\",\n        \"updatedAt\": \"2023-05-12T10:37:47.928Z\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "df3c985b-a50b-4e2e-875d-3442aa3c6666",
+			"description": "This folder contains requests related to viewing and updating user profiles."
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"should have status code as 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}",
+									"",
+									"const response = pm.response.json(),",
+									"    result = response.data;",
+									"",
+									"const responseSchema = {",
+									"    type: 'array',",
+									"    items: {",
+									"        type: 'object',",
+									"        properties: {",
+									"            id: {",
+									"                type: \"number\"",
+									"            },",
+									"            username: {",
+									"                type: \"string\"",
+									"            },",
+									"            email: {",
+									"                type: \"string\"",
+									"            },",
+									"            age: {",
+									"                type: \"number\"",
+									"            },",
+									"            role: {",
+									"                type: \"string\"",
+									"            }",
+									"        },",
+									"        required: ['id', 'username', 'email', 'age', 'role']",
+									"    }",
+									"};",
+									"",
+									"pm.test('should have all the required keys in the response', function () {",
+									"    pm.expect(tv4.validate(result, responseSchema)).to.be.true;",
+									"});"
+								]
+							}
+						}
+					],
+					"id": "6bf4b1fa-e6dd-4a83-b27d-289529f39be7",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/user/all",
+						"description": "This request lets admins fetch a list of all users."
+					},
+					"response": [
+						{
+							"id": "992af207-aa9a-4067-beed-e640e039af95",
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{url}}/user/all"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 09:19:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "626"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"272-heaQAnXNa57C97pjmzfC29Xkzp4\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"username\": \"harry123\",\n            \"email\": \"harry.smith@example.com\",\n            \"password\": \"d4cfaf03600bf1a55ba4372ceb17ff9234576eb062c1f8b78bd3c53c703f194c\",\n            \"age\": 33,\n            \"role\": \"admin\",\n            \"firstName\": \"Harry\",\n            \"lastName\": \"Smith\",\n            \"createdAt\": \"2023-05-12T10:34:32.864Z\",\n            \"updatedAt\": \"2023-05-12T10:38:02.468Z\"\n        },\n        {\n            \"id\": 2,\n            \"username\": \"tommiller\",\n            \"email\": \"tommiller14@example.com\",\n            \"password\": \"637caa1770c0bebfb80750cbf47d7f2b1aa5c90ab002eb230893edb54c26ebf5\",\n            \"age\": 35,\n            \"role\": \"user\",\n            \"firstName\": \"Tom\",\n            \"lastName\": \"Miller\",\n            \"createdAt\": \"2023-05-12T10:35:19.200Z\",\n            \"updatedAt\": \"2023-05-12T10:35:19.200Z\"\n        },\n        {\n            \"id\": 3,\n            \"username\": \"sarah.davis\",\n            \"email\": \"sarah.davis@example.com\",\n            \"password\": \"8ddfb53c7c150ac15826e47259b31a566bbe906b1b1303ce46c3850e5b4213cf\",\n            \"age\": 20,\n            \"role\": \"admin\",\n            \"firstName\": \"Sarah\",\n            \"lastName\": \"Davis\",\n            \"createdAt\": \"2023-05-12T10:35:56.230Z\",\n            \"updatedAt\": \"2023-05-12T10:35:56.230Z\"\n        },\n        {\n            \"id\": 4,\n            \"username\": \"sandrawill\",\n            \"email\": \"sandrawilliam1996@example.com\",\n            \"password\": \"f4967bd8be423c9a60507c579ad58b051ac0fdca9e9d0cbcc6887bbbb24e05f5\",\n            \"age\": 20,\n            \"role\": \"user\",\n            \"firstName\": \"Sandra\",\n            \"lastName\": \"William\",\n            \"createdAt\": \"2023-05-12T10:36:32.417Z\",\n            \"updatedAt\": \"2023-05-12T10:36:32.417Z\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "3950c409-a74a-45f7-aa44-6d08c9d8ce0f",
+							"name": "200 (Filter by Age)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/user/all?age=20",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"all"
+									],
+									"query": [
+										{
+											"key": "age",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "317"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"13d-lRbtN51pMRZBBjKehNx92136uMo\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 10:15:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": [\n        {\n            \"id\": 3,\n            \"username\": \"sarah.davis\",\n            \"email\": \"sarah.davis@example.com\",\n            \"password\": \"8ddfb53c7c150ac15826e47259b31a566bbe906b1b1303ce46c3850e5b4213cf\",\n            \"age\": 20,\n            \"role\": \"admin\",\n            \"firstName\": \"Sarah\",\n            \"lastName\": \"Davis\",\n            \"createdAt\": \"2023-05-12T10:35:56.230Z\",\n            \"updatedAt\": \"2023-05-12T10:35:56.230Z\"\n        },\n        {\n            \"id\": 4,\n            \"username\": \"sandrawill\",\n            \"email\": \"sandrawilliam1996@example.com\",\n            \"password\": \"f4967bd8be423c9a60507c579ad58b051ac0fdca9e9d0cbcc6887bbbb24e05f5\",\n            \"age\": 20,\n            \"role\": \"user\",\n            \"firstName\": \"Sandra\",\n            \"lastName\": \"William\",\n            \"createdAt\": \"2023-05-12T10:36:32.417Z\",\n            \"updatedAt\": \"2023-05-12T10:36:32.417Z\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "7f6d9640-2194-47a4-88ca-4906430e8c3b",
+							"name": "403 (Not Admin)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{url}}/user/all"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "74"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4a-NDRoRplGOViCLgid+swkqPVOQkQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 10:39:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": false,\n    \"error\": \"You need to be a admin to access this endpoint.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Change user role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"should have status code as 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}",
+									"",
+									"const response = pm.response.json(),",
+									"    result = response.data;",
+									"",
+									"const responseSchema = {",
+									"    type: 'object',",
+									"    properties: {",
+									"        id: {",
+									"            type: \"number\"",
+									"        },",
+									"        username: {",
+									"            type: \"string\"",
+									"        },",
+									"        email: {",
+									"            type: \"string\"",
+									"        },",
+									"        age: {",
+									"            type: \"number\"",
+									"        },",
+									"        role: {",
+									"            type: \"string\"",
+									"        }",
+									"    },",
+									"    required: ['id', 'username', 'email', 'age', 'role']",
+									"};",
+									"",
+									"pm.test('should have all the required keys in the response', function () {",
+									"    pm.expect(tv4.validate(result, responseSchema)).to.be.true;",
+									"});",
+									"",
+									"const requestPayload = JSON.parse(pm.request.body);",
+									"",
+									"pm.test('should update the role of the user', function () {",
+									"    pm.expect(result.role).to.eql(requestPayload.role);",
+									"});"
+								]
+							}
+						}
+					],
+					"id": "a69e5b50-9072-4340-9b87-674c17030e05",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/change-role/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"change-role",
+								":userId"
+							],
+							"variable": [
+								{
+									"id": "a1ba0ad2-4ed2-4df3-9a07-b03e0cf6847f",
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						},
+						"description": "This request lets admins update the role of users.\n\nThe user ID needs to be updated in the `userId` path variable in the request URL."
+					},
+					"response": [
+						{
+							"id": "f17a8c4d-ba7c-4fac-9446-84ec786c1f15",
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"role\": \"user\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/change-role/:userId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"change-role",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 09:19:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "149"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"95-GjqAcTjMnO7B2tSvRcrACFXOW1U\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"id\": 2,\n        \"username\": \"tommiller\",\n        \"email\": \"tommiller14@example.com\",\n        \"age\": 35,\n        \"role\": \"user\",\n        \"firstName\": \"Tom\",\n        \"lastName\": \"Miller\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"should have status code as 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"if (pm.response.code !== 200) {",
+									"    return;",
+									"}",
+									"",
+									"const response = pm.response.json(),",
+									"    result = response.data;",
+									"",
+									"pm.test('should delete 1 user from the table', function () {",
+									"    pm.expect(result.numberOfUsersDeleted).to.eql(1);",
+									"});"
+								]
+							}
+						}
+					],
+					"id": "1d46b7fa-fd1c-41e4-b5cc-adb18db9d115",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								":userId"
+							],
+							"variable": [
+								{
+									"id": "1623e14c-da31-48a8-b7d1-f9ccabb29a92",
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						},
+						"description": "This request lets admins delete user profiles.\n\nThe user ID needs to be updated in the `userId` path variable in the request URL."
+					},
+					"response": [
+						{
+							"id": "18b3917a-e9fe-4b47-9c2f-0a8dd931d0ec",
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/user/:userId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "49"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"31-n9vtSZm2zh9ArtyxgfJLM4p+Uds\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 12 May 2023 10:29:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"numberOfUsersDeleted\": 1\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "63b643ba-5cfd-42f3-82de-5eb03873861a",
+			"description": "This folder contains requests related to managing users."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{accessToken}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://e-commerce-store.glitch.me"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		}
+	]
+}
