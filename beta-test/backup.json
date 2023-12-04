@@ -1,0 +1,592 @@
+{
+	"info": {
+		"_postman_id": "4460ab45-6420-4833-995e-71e72639bf9d",
+		"name": "test-4-Social media API",
+		"description": "# 💌 Get started here\n\nThis collection template is a blueprint demonstrating the core features of a social media REST API, including managing posts, likes, and follows. You can use this template as inspiration to build your custom API or extend it to work with one you've already started working on.\n\n### 🔐 Authentication\n\nThis template assumes the user making requests would be authenticated, for example using a Bearer token. You can set up your chosen authentication method from the 'Authorization' tab.\n\nThe API would allow creating and deleting posts, likes, and follows on behalf of the authenticated user.\n\n## 🔖 How to use this template?\n\n#### Step 1: Send the requests\n\nSend the requests and view the response returned by the mock API, or check out the examples included.\n\n#### **Step 2: Update the base URL**\n\nSelect the collection and navigate to the Variables tab. Update the `base_url` variable with your API's URL.\n\n#### **Step 3: Customize the requests**\n\nUpdate the requests to suit your use case, including the request body, authorization, documentation, headers, tests, and path parameters.\n\n#### **Step 4: Continue building the collection**\n\nCreate requests in this collection to test the new API endpoints you develop.\n\n## ℹ️ Resources\n\n[Building requests](https://learning.postman.com/docs/sending-requests/requests/)  \n[Authorizing requests](https://learning.postman.com/docs/sending-requests/authorization/)  \n[Using variables](https://learning.postman.com/docs/sending-requests/variables/)  \n[Creating your first collection](https://learning.postman.com/docs/getting-started/creating-the-first-collection/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Timeline",
+			"id": "e22b9bd6-5acb-4ddb-a507-1aa2180e3687",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{base_url}}/timeline",
+				"description": "Returns posts in chronological order from all users followed by the authenticated user."
+			},
+			"response": [
+				{
+					"id": "968289ff-17f0-4cfb-94e5-ca65a8d76206",
+					"name": "Timeline",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/timeline"
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"created_at\": \"2023-04-12T16:58:53.444Z\",\n        \"id\": 1234567890,\n        \"text\": \"A social media post\",\n        \"author_id\": 2345678901,\n        \"likes\": 4\n    },\n    {\n        \"created_at\": \"2023-04-11T12:37:14.632Z\",\n        \"id\": 3456789012,\n        \"text\": \"Another social media post\",\n        \"author_id\": 4567890123,\n        \"likes\": 91\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Create post",
+			"id": "1dd07f80-d2a5-47c2-b256-8710a3f73a62",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"Post content\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/posts",
+				"description": "Creates a post on behalf of the authenticated user using the text submitted in the request body."
+			},
+			"response": [
+				{
+					"id": "b2d6736a-1e98-4e36-a0a0-9166c5f9b5b9",
+					"name": "Create post",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"A social media post\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/posts"
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"created_at\": \"2023-04-12T16:58:53.444Z\",\n    \"id\": 1234567890,\n    \"text\": \"A social media post\",\n    \"author_id\": 2345678901,\n    \"likes\": 4\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete post",
+			"id": "9cb6ecef-88b3-47f3-a367-9990060893b2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/:postId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						":postId"
+					],
+					"variable": [
+						{
+							"id": "e9734839-994d-47fd-8546-ee4e5fb5640b",
+							"key": "postId",
+							"value": null,
+							"description": "ID of the post to delete"
+						}
+					]
+				},
+				"description": "Deletes a previously created post by its ID."
+			},
+			"response": [
+				{
+					"id": "7ac5cfb2-acd5-4baa-8476-661fe41b69c7",
+					"name": "Delete Post",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/posts/:postId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								":postId"
+							],
+							"variable": [
+								{
+									"key": "postId",
+									"value": "1234567890",
+									"description": "ID of the post to delete"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"id\": 1234567890\n}"
+				}
+			]
+		},
+		{
+			"name": "Get post",
+			"id": "6c379cbe-2c37-449e-8130-51410edebdf3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/:postId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						":postId"
+					],
+					"variable": [
+						{
+							"id": "b0fa038a-ce93-4f48-891f-f6ca62f396fb",
+							"key": "postId",
+							"value": null,
+							"description": "ID of the post to get"
+						}
+					]
+				},
+				"description": "Get the content and metadata of a post by its ID."
+			},
+			"response": [
+				{
+					"id": "7c42835c-2eb2-44ed-a48b-34bae38fa29a",
+					"name": "Get Post",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/posts/:postId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								":postId"
+							],
+							"variable": [
+								{
+									"key": "postId",
+									"value": "1234567890",
+									"description": "ID of the post to get"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"created_at\": \"2023-04-12T16:58:53.444Z\",\n    \"id\": 1234567890,\n    \"text\": \"A social media post\",\n    \"author_id\": 2345678901,\n    \"likes\": 4\n}"
+				}
+			]
+		},
+		{
+			"name": "Like post",
+			"id": "c66f2ae4-455d-4fd5-a976-16d72ea2ca04",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/likes/:postId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"likes",
+						":postId"
+					],
+					"variable": [
+						{
+							"id": "9e7f8af8-3647-4cdb-8b2e-58cca9eb32b0",
+							"key": "postId",
+							"value": null,
+							"description": "ID of the post to like"
+						}
+					]
+				},
+				"description": "Mark a post as 'liked' by the current user by its ID."
+			},
+			"response": [
+				{
+					"id": "b4ae6d41-2520-4ab8-9f87-c353b3405bd9",
+					"name": "Like Post",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/likes/:postId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"likes",
+								":postId"
+							],
+							"variable": [
+								{
+									"key": "postId",
+									"value": "1234567890",
+									"description": "ID of the post to like"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"id\": 1234567890,\n    \"likes\": 5\n}"
+				}
+			]
+		},
+		{
+			"name": "Unlike post",
+			"id": "a9af1104-1e6d-4f0a-a5d1-3d8dab211f0d",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/likes/:postId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"likes",
+						":postId"
+					],
+					"variable": [
+						{
+							"id": "028fe71f-cbea-4900-bb15-a548ca15eecf",
+							"key": "postId",
+							"value": null,
+							"description": "ID of the post to unlike"
+						}
+					]
+				},
+				"description": "Un-marks a post as 'liked' by the current user by its ID."
+			},
+			"response": [
+				{
+					"id": "271a9e7f-7bd5-42c1-9fb9-2ea01a714ea4",
+					"name": "Unlike Post",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/likes/:postId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"likes",
+								":postId"
+							],
+							"variable": [
+								{
+									"key": "postId",
+									"value": "123467890",
+									"description": "ID of the post to unlike"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"id\": 1234567890,\n    \"likes\": 5\n}"
+				}
+			]
+		},
+		{
+			"name": "Get liked posts",
+			"id": "bd5eef0b-805d-4d62-8c56-b3413173138a",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{base_url}}/likes",
+				"description": "Get content and metadata of all posts 'liked' by the current user."
+			},
+			"response": [
+				{
+					"id": "5a3ca041-4e9f-484c-9852-816b3e77fae7",
+					"name": "Get liked posts",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/likes"
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"created_at\": \"2023-04-12T16:58:53.444Z\",\n    \"id\": 1234567890,\n    \"text\": \"A social media post\",\n    \"author_id\": 2345678901,\n    \"likes\": 4\n}"
+				}
+			]
+		},
+		{
+			"name": "Follow user",
+			"id": "ea5b8ef5-fdba-4955-bc67-4aceeae91779",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/follows/:userId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"follows",
+						":userId"
+					],
+					"variable": [
+						{
+							"id": "b4d5b260-7c66-495f-95a4-10bce787b404",
+							"key": "userId",
+							"value": null,
+							"description": "ID of the user to follow"
+						}
+					]
+				},
+				"description": "Adds a user to the current user's 'following' list by user ID, so that their posts appear in the current user's timeline."
+			},
+			"response": [
+				{
+					"id": "d5f99104-c8f7-48d1-b09c-848f89d842f2",
+					"name": "Follow User",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/follow/:userId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"follow",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "2345678901",
+									"description": "ID of the user to follow"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"id\": 2345678901,\n    \"following\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "Unfollow user",
+			"id": "8b171ac9-4269-47ea-bd95-46bdf0fa6069",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/follows/:userId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"follows",
+						":userId"
+					],
+					"variable": [
+						{
+							"id": "8bb03de6-eb96-499f-9473-5eb610457543",
+							"key": "userId",
+							"value": null,
+							"description": "ID of the user to unfollow"
+						}
+					]
+				},
+				"description": "Removes a user from the current user's 'following' list by user ID, so that their posts no longer appear in the current user's timeline."
+			},
+			"response": [
+				{
+					"id": "4026a4c2-f2a1-4b7e-907d-f294e187dbc0",
+					"name": "Unfollow User",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/follow/:userId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"follow",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "2345678901",
+									"description": "ID of the user to unfollow"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"id\": 2345678901,\n    \"following\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "Get followed users",
+			"id": "d5fedbb2-100b-4631-897a-80c20544847d",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{base_url}}/follows",
+				"description": "Get details of all users being 'followed' by the current user."
+			},
+			"response": [
+				{
+					"id": "fc5205ca-e934-498d-99b8-c1171021c646",
+					"name": "Get followed users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/follows"
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"id\": 2345678901,\n        \"username\": \"a_social_media_user\"\n    }\n]"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://0f5c8e25-004a-4158-86f2-5a58e37e80ab.mock.pstmn.io"
+		}
+	]
+}
